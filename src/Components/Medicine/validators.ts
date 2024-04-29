@@ -16,6 +16,14 @@ export const PrescriptionFormValidator = () => {
       ) {
         errors.base_dosage = "Unit must be same as target dosage's unit";
         errors.target_dosage = "Unit must be same as base dosage's unit";
+      } else if (
+        form.base_dosage &&
+        form.target_dosage &&
+        form.base_dosage.split(" ")[1] === form.target_dosage.split(" ")[1] &&
+        Number(form.base_dosage?.split(" ")[0]) >
+          Number(form.target_dosage?.split(" ")[0])
+      ) {
+        errors.target_dosage = "Target dosage can't be less than Start dosage";
       }
     } else errors.base_dosage = RequiredFieldValidator()(form.base_dosage);
     if (form.dosage_type === "PRN")
@@ -61,7 +69,7 @@ export const comparePrescriptions = (a: Prescription, b: Prescription) => {
 
 export const AdministrationDosageValidator = (
   base_dosage: Prescription["base_dosage"],
-  target_dosage: Prescription["target_dosage"]
+  target_dosage: Prescription["target_dosage"],
 ) => {
   return (value: Prescription["base_dosage"]) => {
     const getDosageValue = (dosage: string | undefined) => {

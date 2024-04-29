@@ -53,6 +53,7 @@ const DefaultLogUpdateCard = ({ round, ...props }: Props) => {
           ghost
           size="small"
           className="w-full"
+          disabled={!!props?.consultationData?.discharge_date}
           onClick={props.onUpdateLog}
         >
           <CareIcon icon="l-pen" className="text-lg" />
